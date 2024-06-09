@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.app.servicios.entidades.Servicio;
 import com.app.servicios.excepciones.MiExcepcion;
 import com.app.servicios.servicios.ServicioServicio;
@@ -36,7 +35,7 @@ public class SercicioControlador {
     @GetMapping("/nuevo")
     public String nuevoServicio(Model model){
         model.addAttribute("servicio", new Servicio());
-        return "formularioServicio";
+        return "formularioServicio.html";
     }
 
     @PostMapping
@@ -49,13 +48,13 @@ public class SercicioControlador {
     public String editarServicio(@PathVariable String id, Model model){
         Servicio servicio = servicioServicio.buscarServicio(id);
         model.addAttribute("Servicio", servicio);
-        return "FormularioServicio";
+        return "tablaServicios.html";
     }
 
     @GetMapping("/{id}/eliminar")
     public String eliminarServicio(@PathVariable String id){
         servicioServicio.borrarServicio(id);
-        return "redirect:/servicio";
+        return "redirect:/tablaServicios.html";
     }
 
 }
