@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
   <meta name="generator" content="Hugo 0.72.0">
-  <title>Album example · Bootstrap</title>
+  <title>Servicios</title>
 
   <link rel="canonical" href="https://v5.getbootstrap.com/docs/5.0/examples/album/">
 
@@ -44,22 +44,24 @@
   </header>
 
   <main>
-    <H1>Lista de Servicios</H1>
+    <h1>Lista de Servicios</h1>
     <table class="table table-striped mt-3">
         <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Acciones</th>
+            <tr class="table-primary">
+                <th scope="col">ID</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Modificar</th>
+                <th scope="col">Eliminar</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="servicios : ${listar}">
-                <td th:text="${servicios.id}">ID</td>
-                <td th:text="${servicios.nombre}">Nombre</td>
+            <tr th:each="servicio : ${servicios}">
+                <td th:text="${servicio.id}">ID</td>
+                <td th:text="${servicio.nombre}">Nombre</td>
                 <td>
-                    <a th:href="@{/servicios/editar/{id}(id=${servicios.id})}" class="btn btn-warning btn-sm">Modificar</a>
-                    <a th:href="@{/servicios/eliminar/{id}(id=${servicios.id})}" class="btn btn-danger btn-sm">Eliminar</a>
+                  <span th:if="${servicio.activo}" th:text="'Activo'">Activo</span>
+                  <span th:if="${!servicio.activo}" th:text="'Inactivo'">Inactivo</span>
                 </td>
             </tr>
         </tbody>
@@ -76,7 +78,7 @@
   <footer class="text-muted py-5">
     <div class="container">
       <p class="float-right mb-1">
-        <a href="#">Atrás</a>
+        <a th:href="@{/}">Volver a la pagina principal</a>
       </p>
       
     </div>
