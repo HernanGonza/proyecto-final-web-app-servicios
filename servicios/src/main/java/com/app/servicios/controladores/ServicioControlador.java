@@ -10,11 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-<<<<<<< HEAD:servicios/src/main/java/com/app/servicios/controladores/SercicioControlador.java
-=======
 import org.springframework.web.bind.annotation.RequestParam;
 
->>>>>>> developer:servicios/src/main/java/com/app/servicios/controladores/ServicioControlador.java
 import com.app.servicios.entidades.Servicio;
 import com.app.servicios.servicios.ServicioServicio;
 
@@ -40,15 +37,9 @@ public class ServicioControlador {
     }
 
     @GetMapping("/nuevo")
-<<<<<<< HEAD:servicios/src/main/java/com/app/servicios/controladores/SercicioControlador.java
-    public String nuevoServicio(Model model){
-        model.addAttribute("servicio", new Servicio());
-        return "formularioServicio.html";
-=======
     public String nuevoServicio(){
         
         return "formularioServicio";
->>>>>>> developer:servicios/src/main/java/com/app/servicios/controladores/ServicioControlador.java
     }
 
     @PostMapping("/guardar")
