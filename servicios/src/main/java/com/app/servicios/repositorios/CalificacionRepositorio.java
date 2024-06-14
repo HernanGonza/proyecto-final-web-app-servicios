@@ -3,34 +3,22 @@ package com.app.servicios.repositorios;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import com.app.servicios.entidades.Servicio;
+
+import com.app.servicios.entidades.Calificacion;
 import com.app.servicios.entidades.Usuario;
 
 @Repository
-public interface CalificacionRepositorio extends JpaRepository<Servicio, Long> {
+public interface CalificacionRepositorio extends JpaRepository<Calificacion, Long> {
 
-    // Buscar calificaciones por ID de usuario
-    List<Servicio> findByUsuarioId(Usuario usuario);
+    @Query("SELECT c FROM Calificacion c WHERE c.usuario = :usuario")
+    public List<Calificacion> buscarCalificacionesPorUsuario(@Param("usuario") Usuario usuario);
 
-    // Buscar calificaciones por ID de proveedor
-    List<Servicio> findByProveedorId(Usuario proveedor);
+    @Query("SELECT c FROM Calificacion c WHERE c.proveedor = :proveedor")
+    public List<Calificacion> buscarCalificacionesPorProveedor(@Param("proveedor") Usuario proveedor);
 
-    // Buscar calificaciones por puntaje
-    List<Servicio> findByPuntaje(int puntaje);
-
-    // Buscar calificaciones por puntaje mayor que
-    List<Servicio> findByPuntajeGreaterThan(int puntaje);
-
-    // Buscar calificaciones por puntaje menor que
-    List<Servicio> findByPuntajeLessThan(int puntaje);
-
-    // Buscar calificaciones por usuario y proveedor
-    List<Servicio> findByUsuarioIdAndProveedorId(Usuario usuario, Usuario proveedor);
-
-    // Contar el número de calificaciones para un proveedor
-    long countByProveedorId(Usuario proveedor);
-
-    // Eliminar calificaciones por ID de usuario
-    void deleteByUsuarioId(Usuario usuario);
+    @Query("SELECT AVG(c.puntaje) FROM Calificacion c WHERE c.proveedor = :proveedor")
+    public Double calcularPromedioPuntajeProveedor(@Param("proveedor") Usuario proveedor);
 }
