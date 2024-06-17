@@ -1,12 +1,4 @@
-<section th:fragment="tarjetas">
-  <div class="container-fluid">
-    <a class="buscador">QUÉ SERVICIO NECESITAS PARA TU HOGAR?</a>
-    <form class="d-flex" role="search">
-      <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Search">
-      <button class="btn btn-outline-success" type="submit">BUSCAR</button>
-    </form>
-  </div>
-  <div class="card-group">
+ <div class="card-group">
        <div class="card">
           <img src="..." class="card-img-top imagenproveedor" alt="...">
           <div class="card-body">
@@ -22,7 +14,8 @@
             --><input id="radio4" type="radio" name="estrellas" value="2"><!--
             --><label for="radio4">★</label><!--
             --><input id="radio5" type="radio" name="estrellas" value="1"><!--
-            --><label for="radio5">★</label>
+            --><label for="radio5">★</label><!--
+            --><label>(300)</label>
             <a href="#" class="btn btn-primary pedir">Solicitar servicio</a>
           </div>
         </div>
@@ -32,7 +25,9 @@
             <h5 class="card-title nombre">Nombre</h5>
             <p class="card-text servicio">servicio</p>
             <p class="card-text"><small class="text-body-secondary experiencia">Años de experiencia</small></p>
+                          <p class="card-text"><small class="text-body-secondary experiencia">cantidad de pedidos</small></p>
             <label for="radio">★★★★★★</label>
+            <label>(00)</label>
             <a href="#" class="btn btn-primary pedir">Solicitar servicio</a>
           </div>
        </div>
@@ -42,9 +37,10 @@
               <h5 class="card-title nombre">Nombre</h5>
               <p class="card-text servicio">servicio</p>
               <p class="card-text"><small class="text-body-secondary experiencia">Años de experiencia</small></p>
-            <label for="radio">★★★★★★</label>
+              <p class="card-text"><small class="text-body-secondary experiencia">cantidad de pedidos</small></p>
+              <label for="radio">★★★★★★</label>
+              <label>(185)</label>
             <a href="#" class="btn btn-primary pedir">Solicitar servicio</a>
-          </div>
         </div>
       </div>
-</section>
+    </div>
