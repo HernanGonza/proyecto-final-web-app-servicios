@@ -1,7 +1,5 @@
 package com.app.servicios.entidades;
 
-
-
 import org.hibernate.annotations.GenericGenerator;
 
 import jakarta.persistence.Column;
@@ -20,15 +18,15 @@ import lombok.Setter;
 public class Servicio {
     
     @Id
-    @GeneratedValue(generator= "uuid")
+    @GeneratedValue (generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    @Column (nullable = false, unique = true)
+    @Column (unique = true, nullable = false)
     private String nombre;
 
     @Column (nullable = false)
-    private boolean activo;
+    private Boolean activo;
 
 
 }

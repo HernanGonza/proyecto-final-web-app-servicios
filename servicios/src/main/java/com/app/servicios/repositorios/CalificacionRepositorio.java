@@ -1,5 +1,6 @@
 package com.app.servicios.repositorios;
 
+<<<<<<< HEAD
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -22,3 +23,15 @@ public interface CalificacionRepositorio extends JpaRepository<Calificacion, Lon
     @Query("SELECT AVG(c.puntaje) FROM Calificacion c WHERE c.proveedor = :proveedor")
     public Double calcularPromedioPuntajeProveedor(@Param("proveedor") Usuario proveedor);
 }
+=======
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.app.servicios.entidades.Calificacion;
+
+@Repository
+public interface CalificacionRepositorio extends JpaRepository<Calificacion, String> {
+
+    
+}
+>>>>>>> developer
