@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org"></html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"> 
+<!-- HAY QUE SEGURIZAR ESTA PAGINA CON THYMELEAF, YA ESTA CARGADO ARRIBA,
+ PERMITE PONER CONDICIONALES DE QUIEN VE CUAL COSA-->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="imagenes/logo-fondo-transparente.png" />
     <title>Panel de Usuario</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +15,7 @@
 </head>
 <body>
     <header>
-        <nav th:replace="~{fragments/navbar :: nav}"></nav>
+        
     </header>
 
     <h1 th:if="${session.usuariosession != null}" th:text="'Bandeja de mensajes de ' + ${session.usuariosession.nombre}" class="titulo"></h1>
@@ -21,7 +24,7 @@
     <div class="ordenes-abiertas">
         <h2>Ordenes Abiertas</h2>
         <div class="ordenes-abiertas-contenedor">
-            <div class="card" style="width: 13rem;">
+            <div class="card" style="width: 13rem;" data-tilt data-tilt-glare data-tilt-max-glare="0.8" data-tilt-scale="1.3">
                 <img src="..." class="card-img-top" alt="...">
                 <div class="card-body">
                   <h5 class="card-title">Card title</h5>
@@ -92,9 +95,10 @@
 
 
 
-
+<script type="text/javascript" src="javascript/vanilla-tilt.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
+    
 </body>
 </html>
