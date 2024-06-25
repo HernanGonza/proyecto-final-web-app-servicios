@@ -143,13 +143,23 @@ public class PortalControlador {
         }
     }
 
-    @GetMapping("/login")
-    public String login(@RequestParam(required = false) String error, ModelMap modelo) {
-        if (error != null) {
-            modelo.put("error", "Email o contraseña incorrectos");
+    @GetMapping("/redirectByRole")
+    public String redirectByRole(HttpSession session) {
+        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
+        if (logueado == null) {
+            return "redirect:/login"; // Manejar caso de sesión no iniciada adecuadamente
         }
-        return "index.html";
+    
+        switch (logueado.getRol().toString()) {
+            case "CLIENTE":
+                return "redirect:/inicio";
+            case "PROVEEDOR":
+                return "redirect:/panelUsuario";
+            default:
+                return "redirect:/login"; // Manejar caso de roles no esperados
+        }
     }
+
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_PROVEEDOR', 'ROLE_CLIENTEPROVEEDOR', 'ROLE_CLIENTE', 'ROLE_SUPERADMIN')")
     @GetMapping("/inicio")
@@ -236,11 +246,11 @@ public class PortalControlador {
         if (logueado.getRol().toString().equals("CLIENTEPROVEEDOR")) {
             return "redirect:/actualizarClienteProveedor";
         }
-        return "actualizarCliente.html";
+        return "formularioModificarCliente.html";
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_CLIENTE', 'ROLE_SUPERADMIN')")
-    @PostMapping("/perfil/{id}")
+    @PostMapping("/modificarPerfil/{id}")
     public String modificarCliente(@RequestParam String nombre, 
                                 @RequestParam String apellido, 
                                 @RequestParam String direccion, 
@@ -256,7 +266,7 @@ public class PortalControlador {
 
         try {
             usuarioServicios.modificarCliente(nombre, apellido, direccion, localidad, barrio, telefono, email, password, password2, archivo, id);
-            return "redirect:/";
+            return "inicio.html";
         } catch (Exception e) {
             modelo.put("error", e.getMessage());
             return "error.html";
