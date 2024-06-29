@@ -1,6 +1,10 @@
 package com.app.servicios.controladores;
 
+import java.io.IOException;
+import java.nio.file.Files;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.app.servicios.servicios.ImagenServicios;
 import com.app.servicios.servicios.UsuarioServicios;
+import com.app.servicios.entidades.Imagen;
 import com.app.servicios.entidades.Usuario;
 import com.app.servicios.repositorios.UsuarioRepositorio;
 
@@ -36,27 +41,43 @@ public class ImagenControlador {
 
     @RequestMapping("/perfil/{id}")
     public ResponseEntity<byte[]> imagenUsuario(@PathVariable String id){
-         @SuppressWarnings("deprecation")
-        Usuario usuario = usuarioRepositorio.getById(id);
-        byte[] imagen = usuario.getImagen().getContenido();
-        HttpHeaders headers = new HttpHeaders(); 
-        headers.setContentType(MediaType.IMAGE_JPEG);
-
-
-        return new ResponseEntity<> (imagen, headers, HttpStatus.OK);
-
-
+        Usuario usuario =usuarioRepositorio.findById(id).orElse(null);
+        if (usuario != null && usuario.getImagen() != null) {
+            byte[] imagen = usuario.getImagen().getContenido();
+            HttpHeaders headers = new HttpHeaders(); 
+            headers.setContentType(MediaType.IMAGE_JPEG);
+            return new ResponseEntity<> (imagen, headers, HttpStatus.OK);
+        } else {
+            try {
+                ClassPathResource imgFile = new ClassPathResource("static/imagenes/default-profile.jpg");
+                byte[] imageBytes = Files.readAllBytes(imgFile.getFile().toPath());
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.IMAGE_JPEG);
+                return new ResponseEntity<>(imageBytes, headers, HttpStatus.OK);
+            } catch (IOException e) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+        
     }
 
     @GetMapping("/modificar/{id}")
     public String mostrarFormularioImagen(@PathVariable String id, ModelMap modelo) {
+        modelo.put("id", id);
         return "formularioImagen.html";
     }
 
     @PostMapping("/modificado/{id}")
-    public String modificarImagen(@PathVariable String id, @RequestParam MultipartFile archivo, ModelMap modelo) {
+    public String modificarImagen(@PathVariable String id,
+                                    @RequestParam MultipartFile archivo,
+                                    ModelMap modelo) {
         try {
-            imagenServicios.actualizarImagen(archivo, id);
+            Imagen imagen = imagenServicios.actualizarImagen(archivo, id);
+            Usuario usuario = usuarioRepositorio.findById(id).orElse(null);
+            if (usuario != null) {
+                usuario.setImagen(imagen);
+                usuarioRepositorio.save(usuario);
+            }
             return "redirect:/inicio";
         } catch (Exception ex) {
             modelo.put("error", ex.getMessage());
