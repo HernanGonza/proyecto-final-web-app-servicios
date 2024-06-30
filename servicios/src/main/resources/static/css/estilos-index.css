@@ -1,3 +1,11 @@
+@font-face {
+    font-family:'Amsterdam';
+    src: url('/fuentes/Amsterdam.ttf') format('truetype');
+    /* Agrega más formatos de fuente según sea necesario */
+    font-weight: normal;
+    font-style: normal;
+  }
+
 * {
     padding: 0;
     margin: 0;
@@ -5,13 +13,15 @@
 }
 
 .bienvenida {
-    height: 300px;
-    justify-items:center;
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
     align-items: center;
-    text-align: justify;
+    text-align: center;
     margin-top: 20px;
     margin-bottom: 70px;
-    background-image: url(/imagenes/reparaciones-del-hogar.jpg);
+    background-image: url(/imagenes/clara.png);
     box-sizing: border-box;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -21,54 +31,75 @@
 }
 .presentacion{
     margin: 30px;
-    font-size: large; 
-    font-weight: bolder;
-    color:  black;
-    background-color: white;
-    opacity: 50%;
-    
+    font-size: 25px; 
+    color: black;
+    opacity: 100%;
+    padding-top: 30px;
+    justify-self: center;  
+    width: 70%;  
+}
+
+.eslogan {
+    width: 100%;
 }
 .cierre {
     text-align: center;
     margin: 30px;
+    color: black;
+    font-size: 300%; 
+    font-family: 'Amsterdam';
+    margin-bottom: 50px;
+
+}
+.contenedorContiene {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .contenedor-servicios {
+    width: 90%;
+    align-self: center;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 10px;
-    justify-items: center;
-    align-items: center;
-    margin-top: 50px;
+    grid-template-columns: auto auto auto auto auto auto auto auto auto;
+    gap: 30px;
     margin-bottom: 70px;
-    margin-left: 20px;
-    margin-right: 20px;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    justify-content: center;
 }
 
 body {
-    background-color:#717679;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    background: linear-gradient( #0683C2, #96B8CD, #d3d9d9,  #ffff);
     
 }
 
 .contenedor-servicios img {
-    width: 100px;
-    height: 100px;
-    border-radius: 70%;
+    width: 80%;
+    height: 90%;
 }
+
+
+
 
 @media (max-width: 767px) {
     .contenedor-servicios {
-        grid-template-columns: repeat(3, 1fr);
-        background-color: white;
+        grid-template-columns: repeat(3, 0.5fr);
     }
+
+
 }
 
 @media (max-width: 480px) {
     .contenedor-servicios {
         grid-template-columns: repeat(2, 0.1fr);
-        background-color: white;
     }
+    
 }
 
 .logo {
@@ -90,7 +121,6 @@ body {
     background-image: url(/imagenes/portada.png) ;
     height: 500px;
     background-size: cover;
-    border-bottom: solid 0.5rem #0683C2;
 
 }
 .navbar {
@@ -105,12 +135,27 @@ body {
 }
 #my-text1 {
     display:inline;
-
  }
+
+
 #my-text2 {
     display:inline;
-
  }
+
+ .textoBoton {
+    color: #455B66;
+ }
+
+ #my-text1:hover .textoBoton{
+    color: #ffff;
+    opacity: 100%;
+ }
+
+ #my-text2:hover .textoBoton{
+    color: #ffff;
+    opacity: 100%;
+ }
+
 .navIndex {
     width: 100%;
     display: flex;    
@@ -123,12 +168,10 @@ body {
     font-family:"Montserrat", sans-serif;
     background-color: transparent;
     border: none;
-    color: white;
     font-weight: bolder;
     justify-items: flex-end;
     font-size: larger;
 }
-
 
 .btnInicio {
     text-decoration: none;
@@ -170,9 +213,29 @@ body {
 .tituloServicios {
     text-align: center;
     margin-top: 150px;
-    margin-bottom: 50px;
-    font-family:"Montserrat", sans-serif;
+    margin-bottom: 170px;
+    font-family: 'Amsterdam';
+    color: #455B66;
+    font-size: 450%;
 }
+
+
+@media (max-width: 767px) {
+    .tituloServicios {
+        font-size: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .tituloServicios {
+        font-size: 35px;
+   
+    }
+}
+
+
+
+
 .boton {
     background-color: #0683C2;
 }
