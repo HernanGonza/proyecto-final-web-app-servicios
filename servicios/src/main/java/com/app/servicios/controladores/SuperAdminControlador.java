@@ -143,14 +143,14 @@ public class SuperAdminControlador {
     }
 
     // Convertir cliente a admin
-    @PostMapping("/usuarios/{id}/convertir-a-admin")
+    @PostMapping("/usuarios/{id}")
     public String convertirClienteAAdmin(@PathVariable String id, ModelMap modelo) {
         try {
             usuarioServicios.convertirClienteAAdmin(id);
-            return "redirect:/superadmin/usuarios";
+            return "redirect:/admin/panel";
         } catch (MiExcepcion e) {
             modelo.put("error", e.getMessage());
-            return "redirect:/superadmin/usuarios";
+            return "redirect:/admin/panel";
         }
     }
 
@@ -191,7 +191,7 @@ public class SuperAdminControlador {
     public String modificarCalificacion(@PathVariable String id, @RequestParam Integer puntaje,
             @RequestParam String comentario, @RequestParam boolean activo, ModelMap modelo) {
         try {
-            calificacionServicios.modificarCalificacion(id, puntaje, comentario, activo);
+            calificacionServicios.modificarCalificacion(id, comentario);
             return "redirect:/superadmin/calificaciones";
         } catch (MiExcepcion e) {
             modelo.put("error", e.getMessage());

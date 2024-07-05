@@ -23,6 +23,9 @@ footer {
     }
 }
 
+
+
+
 @media (max-width: 800px) {
     .footerSuperior {
         flex-direction: column;
@@ -36,6 +39,8 @@ footer {
     }
 
 }
+
+
 
 @media (max-width: 400px) {
     .btnFArriba {
@@ -83,7 +88,6 @@ footer {
 
 .item{
     height: 40px;
-    background-color:  #455B66;
     border-radius: 40%;
     text-align: end;
     margin-left: 200px;
@@ -134,4 +138,26 @@ footer {
     font-size: small;
     justify-content: center;
     text-align: center;    
+}
+
+
+.btnAyuda {
+    background: linear-gradient( #0683C2, #d3d9d9, #D3D9D9,  #ffff);
+}
+
+.btnEnviar {
+    background-color:#0683C2;
+    font-weight: bolder;
+    color: black;
+}
+
+.btnPreguntasF {
+    background: linear-gradient( #0683C2, #d3d9d9, #D3D9D9,  #ffff);
+}
+
+.btnPoliticas {
+    background: linear-gradient( #0683C2, #d3d9d9, #D3D9D9,  #ffff);
+}
+.btnTerminos {
+    background: linear-gradient( #0683C2, #d3d9d9, #D3D9D9,  #ffff);
 }

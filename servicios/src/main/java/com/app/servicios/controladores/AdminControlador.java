@@ -19,6 +19,8 @@ import com.app.servicios.servicios.CalificacionServicios;
 import com.app.servicios.servicios.ServicioServicios;
 import com.app.servicios.servicios.UsuarioServicios;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminControlador {
@@ -31,7 +33,32 @@ public class AdminControlador {
 
     @Autowired
     private CalificacionServicios calificacionServicios;
+// panel control
+    @GetMapping("/panel")
+    public String panelAdministrador(ModelMap modelo, HttpSession session) {
 
+        List<Servicio> servicios = servicioServicios.listarServiciosTodos();
+        modelo.addAttribute("servicios", servicios);
+        List<Usuario> cliente = usuarioServicios.listarClientes();
+        modelo.addAttribute("clientes", cliente);
+        List<Usuario> proveedor = usuarioServicios.listarProveedores();
+        modelo.addAttribute("proveedor", proveedor);
+        List<Usuario> clienteProveedor = usuarioServicios.listarClienteProveedores();
+        modelo.addAttribute("clienteproveedor", clienteProveedor);
+        List<Calificacion> calificacionesDenunciadas = calificacionServicios.listarCalificacionesDenunciadas();
+        modelo.addAttribute("denuncias", calificacionesDenunciadas);
+        
+        return "administrador.html";
+    }
+// censurar comentario
+@PostMapping("/censurarComentario")
+public String censurarComentario(@RequestParam("id") String id, @RequestParam("comentario") String comentario, ModelMap modelo) throws Exception {
+    System.out.println("entre al controlador");
+        calificacionServicios.censurarComentario(id, comentario);
+        List<Calificacion> calificacionesDenunciadas = calificacionServicios.listarCalificacionesDenunciadas();
+        modelo.addAttribute("denuncias", calificacionesDenunciadas);
+    return "administrador.html";
+}
     // Mostrar lista de servicios
     @GetMapping("/servicios")
     public String listarServicios(ModelMap modelo) {
@@ -180,10 +207,10 @@ public class AdminControlador {
 
     // Modificar calificación
     @PostMapping("/calificaciones/modificar/{id}")
-    public String modificarCalificacion(@PathVariable String id, @RequestParam Integer puntaje,
-            @RequestParam String comentario, @RequestParam boolean activo, ModelMap modelo) {
+    public String modificarCalificacion(@PathVariable String id,
+            @RequestParam String comentario, ModelMap modelo) {
         try {
-            calificacionServicios.modificarCalificacion(id, puntaje, comentario, activo);
+            calificacionServicios.modificarCalificacion(id, comentario);
             return "redirect:/admin/calificaciones";
         } catch (MiExcepcion e) {
             modelo.put("error", e.getMessage());

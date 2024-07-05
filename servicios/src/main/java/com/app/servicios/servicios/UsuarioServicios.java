@@ -19,11 +19,13 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.app.servicios.entidades.Calificacion;
 import com.app.servicios.entidades.Imagen;
 import com.app.servicios.entidades.Servicio;
 import com.app.servicios.entidades.Usuario;
 import com.app.servicios.enumeraciones.Rol;
 import com.app.servicios.excepciones.MiExcepcion;
+import com.app.servicios.repositorios.CalificacionRepositorio;
 import com.app.servicios.repositorios.UsuarioRepositorio;
 
 import jakarta.servlet.http.HttpSession;
@@ -35,6 +37,8 @@ public class UsuarioServicios implements UserDetailsService {
     private UsuarioRepositorio usuarioRepositorio;
     @Autowired
     private ImagenServicios imagenServicios;
+    @Autowired
+    private CalificacionRepositorio calificacionRepositorio;
 
     // Crear Clientes y Proveedores//
     @Transactional
@@ -248,6 +252,30 @@ public class UsuarioServicios implements UserDetailsService {
 
         usuarioRepositorio.save(clienteProveedor);
     }
+// obtener promedio
+public String obtenerPromedioCalificaciones(Usuario proveedor) throws MiExcepcion {
+        List<Calificacion> calificaciones = calificacionRepositorio.buscarCalificacionesPorProveedor(proveedor); 
+        String mostrarPromedio;
+        if (calificaciones.isEmpty()) {
+            mostrarPromedio = "El profesional aun no ha recibido calificaciones";
+        } else{
+        double sumaPuntajes = calificaciones.stream()
+                                            .mapToInt(Calificacion::getPuntaje)
+                                            .sum();
+
+        double apromediar = sumaPuntajes / calificaciones.size();
+
+        Integer promedio = (int) Math.round(apromediar);
+        mostrarPromedio = promedio.toString();
+        }
+        return mostrarPromedio;
+    
+    }
+    // Contar calificaciones
+    public int contarCalificaciones(Usuario proveedor) {
+        Integer cantidadCalificaciones =calificacionRepositorio.buscarCalificacionesPorProveedor(proveedor).size();
+        return cantidadCalificaciones;
+    }
 
     @Transactional
     public void actualizarImagenUsuario(String usuarioId, MultipartFile archivo) throws MiExcepcion {
@@ -288,6 +316,11 @@ public class UsuarioServicios implements UserDetailsService {
     public List<Usuario> listarProveedores() {
         List<Usuario> proveedores = usuarioRepositorio.buscarPorRol(Rol.PROVEEDOR);
         return proveedores;
+    }
+    @Transactional(readOnly = true)
+    public List<Usuario> listarClienteProveedores(){
+        List<Usuario> clienteproveedores = usuarioRepositorio.buscarPorRol(Rol.CLIENTEPROVEEDOR);
+        return clienteproveedores;
     }
 
     @Transactional(readOnly = true)
@@ -604,4 +637,24 @@ public class UsuarioServicios implements UserDetailsService {
     public boolean existeProveedorPorDni(Integer dni) {
         return usuarioRepositorio.existsByDni(dni);
     }
+
+
+    @Transactional
+    public void recuperarPass(String email, String password, String password2) throws MiExcepcion {
+
+        if (!password.equals(password2)) {
+            throw new MiExcepcion("Las contraseñas no coinciden");
+        }
+        Optional<Usuario> usuarioOptional = Optional.ofNullable(usuarioRepositorio.buscarPorEmail(email));
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            usuario.setPassword(new BCryptPasswordEncoder().encode(password));
+            usuarioRepositorio.saveAndFlush(usuario);
+        } else {
+            throw new MiExcepcion("No existe el usuario");
+        }
+
+
+    }
+
 }

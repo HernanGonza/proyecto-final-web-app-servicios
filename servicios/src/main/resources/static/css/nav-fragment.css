@@ -22,29 +22,44 @@ nav{
     padding-top: 20px;
     text-decoration: none;
     font-family: 'Amsterdam';
-    font-size: 25px;
+    font-size: 15px;
     color: #ffff;
 
 }
 .navbar{
-    background-color: #0683C2;
-    opacity: 95%;
+    padding: 0;
     margin: 0px;
 }
+
+
+
 .navInicio {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #0683C2;
+    background-color: transparent;
 }
+
+.navbar :hover{
+    background-color: #0683C2; 
+    opacity: 95%; 
+
+}
+
 .headerDesplegable {
-    background-color: #455B66;
+    background-color: #ffff;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 50px;
     padding: 0 20px;
+}
+.imagenPerfil {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 35px;
 }
 
 .headerBody{
@@ -56,8 +71,31 @@ nav{
     opacity: 97%;
     font-size: 20px;
 }
-.btnBuscar {
+.btnBuscarNav {
     background-color: #0683C2;
     color: black;
-    
+}
+
+
+
+
+ /* Estilo del subrayado */
+ 
+#my-text1 {
+    display: inline;
+}
+#my-text2 {
+    display: inline;
+}
+#my-text3 {
+    display: inline;
+}
+#my-text4 {
+    display: inline;
+}
+#my-text5 {
+    display: inline;
+}
+#my-text6 {
+    display: inline;
 }
